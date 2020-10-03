@@ -1,0 +1,11 @@
+<style>
+      .tab-button-icon{
+        min-width: 30px !important;
+        height: 30px !important;
+    }
+</style>
+<ion-tabs #myTabs [selectedIndex]="myIndex">
+  <ion-tab [root]="tab1Root" tabTitle="Favorites" tabIcon="favorites"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Process Directory" tabIcon="directory"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Settings" tabIcon="appsettings"></ion-tab>
+</ion-tabs>

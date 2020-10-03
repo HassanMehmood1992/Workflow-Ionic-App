@@ -1,0 +1,54 @@
+<style>
+    input.ng-invalid{border-color: red !important; border-radius: 4px;} 
+    textarea.ng-invalid{border-color: red !important; border-radius: 4px;}
+    .validation{ font-size:11px;color:red;margin-left: 1%;}
+    .peoplePickerRequired{
+      border: 1px solid !important;
+      border-color: red !important; 
+      border-radius: 4px;
+      height: auto !important;
+      padding-top: 0.5%
+    }
+    .peoplePickerNotRequired{
+
+
+    border: 0px solid;
+    }
+
+    .peoplePickerPlaceholder{
+        color:#999999;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-right: 15%;
+    }
+    .disablePeoplePicker {
+        min-height: 30px;
+        padding-top: 0.5%
+
+        opacity: 0.4;
+ }
+    </style>
+<div style="text-align: left;">
+    <div *ngIf="!controlOptions.disabled || !controlOptions.readonly" [ngClass]="{'enablePeoplePicker': !controlOptions.disabled, 'disablePeoplePicker': controlOptions.disabled, 'peoplePickerRequired': ngModel.length == 0 && controlOptions.required, 'peoplePickerNotRequired': ngModel.length >= 0}" class="{{className}}"  
+    (click)="openDialog()" >
+    <div style="clear:both">
+        <!--<span *ngIf="ngModel.length == 0" class="peoplePickerPlaceholder">{{controlOptions.placeholder}}</span>-->
+        <img  style="width:20px; display: inline-block;float: left;" src="assets/images/form_controls/add-link.png"/>
+        <span class="peoplePickerPlaceholder" style="padding-left: 10px;display: block;float: left;">{{controlOptions.placeholder}}</span>
+        <input id="{{fieldName}}" name="{{fieldName}}" [attr.readonly]="controlOptions.readonly?'':null" [attr.disabled]="controlOptions.disabled?'':null"
+        [required]="controlOptions.required" style="display:none" type="text" [formControl]="myForm.controls[fieldName]"/>
+        </div>
+    </div>
+    <div *ngFor="let person of ngModel">
+
+          <div style="clear:both">
+              <img *ngIf="!controlOptions.disabled || !controlOptions.readonly" style="width:20px; margin-left: 5px; display: inline-block;float: left;" src="assets/images/form_controls/row_remove.png"  (click)="removeURL(person, i)"/>
+              <a style="padding-left: 10px;display: block;float: left;" href="{{person.url}}">{{person.title}}</a>
+          </div>
+
+    </div>
+    <div class="validation" *ngIf="ngModel.length == 0 && controlOptions.required && clicked">
+        {{controlOptions.validationText}}
+      </div>
+</div>

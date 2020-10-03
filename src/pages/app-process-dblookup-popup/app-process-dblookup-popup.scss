@@ -1,0 +1,24 @@
+page-app-process-dblookup-popup {
+    div.searchbar-input-container > div.searchbar-search-icon
+    {
+      background-image: url("./../assets/icon/search_placeholder.png") !important;
+    }
+    div.item-inner
+    {
+      padding: 0px !important;
+    }
+    ion-label
+    {
+      margin: 0px !important
+    }
+    .virtualClass
+    {
+      overflow: hidden;
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+}

@@ -1,0 +1,19 @@
+page-addon {
+
+    $toolbar-ios-title-text-align: left;
+
+    .wide-as-needed {
+        overflow: auto;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+      }
+      .scroll { 
+        min-width: 100%;
+      }
+
+      .card-content{
+        overflow-y: scroll;
+      }
+
+}

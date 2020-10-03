@@ -1,0 +1,87 @@
+<style>
+	th {
+		text-align: center;
+	}
+	
+	input.ng-invalid {
+		border-color: red !important;
+		border-radius: 4px;
+	}
+	
+	textarea.ng-invalid {
+		border-color: red !important;
+		border-radius: 4px;
+	}
+	
+	select.ng-invalid {
+		border-color: red !important;
+		border-radius: 4px;
+	}
+	
+	.validation {
+		font-size: 11px;
+		color: red;
+		margin-left: 1%;
+	}
+	
+	.mobclass {
+		position: relative;
+		overflow: scroll;
+		display: block;
+	}
+</style>
+<div class="mobclass">
+	<table id="tbl{{tableJson.TableSettings.name}}" class="rftable enableCounte">
+		<thead>
+			<tr>
+				<th class="tableHeading form-tableHeading" style="color:white;padding:1%;text-align:left;font-weight: normal;border-top-left-radius: 5px;border-top-right-radius: 5px;"
+					[colSpan]="tableJson.Columns.length+2">{{tableJson.TableSettings.displayName}}</th>
+			</tr>
+			<tr class="tableHeaderRow form-tableHeaderRow" style="color:white;">
+				<th *ngIf="tableJson.TableSettings.displayIndex" class="table-display-index" style="text-align:center; vertical-align:middle; width:4% !important;">#</th>
+				<th class="table-header-columns" style="font-weight: normal;" *ngFor="let column of tableJson.Columns; let parentIndex = index" width="{{tableJson.TableSettings.layout[parentIndex]}}">{{column.heading}}</th>
+				<th class="" *ngIf="tableJson.TableSettings.removeRowIcon == true" style="width:4%;min-width: 20px;"></th>
+			</tr>
+		</thead>
+		<tbody class="" id="tblbody">
+			<tr *ngFor="let row of temp; let parentIndex = index" style="vertical-align: top;" class="table-body-rows">
+				<td *ngIf="tableJson.TableSettings.displayIndex" class="tableIndexColumn form-tableIndexColumn table-body-rows2" style="text-align:center; width:4% !important; ">{{parentIndex+1}}</td>
+				 <td *ngFor="let column of tableJson.Columns; let childIndex = index" class="" >
+              <span *ngIf="column.dataType == 'text'"><textarea [(ngModel)]="row[column.name]" attr.value="{{row[column.name]}}"  appAutosize [maxlength]="column.options.maxLength" placeholder="{{column.placeHolder}}" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" class="form-control table-row-textarea" value="{{row[column.name]}}" style="text-align: left !important;resize:inherit;" [attr.readonly]="controlOptions[column.name].readonly ? '':null" [attr.disabled]="controlOptions[column.name].disabled ? '':null" [required]="controlOptions[column.name].required">{{row[column.name]}}</textarea><div class="validation" *ngIf="(row[column.name] == '' || row[column.name] == null) && controlOptions[column.name].required">{{controlOptions[column.name].validationText}}</div></span>
+              <span *ngIf="column.dataType == 'number'"> <app-number-field ngDefaultControl [isFooter]="false" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [(ngModel)]="row[column.name]" [controlOptions]="controlOptions[column.name]" (onNumberFieldChange)="numberFieldChange($event,column.name,parentIndex)"></app-number-field></span>
+              <span *ngIf="column.dataType == 'checkbox'"><input [(ngModel)]="row[column.name]" attr.checked="{{row[column.name]}}" type="checkbox" placeholder="{{column.placeHolder}}" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" class=" form-control" value="{{row[column.name]}}" style="text-align: left !important;" [attr.readonly]="controlOptions[column.name].readonly ? '':null" [attr.disabled]="controlOptions[column.name].disabled ? '':null" [required]="controlOptions[column.name].required" ><div class="validation" *ngIf="(row[column.name] == '' || row[column.name] == null) && controlOptions[column.name].required">{{controlOptions[column.name].validationText}}</div></span>
+              <span *ngIf="column.dataType == 'radio'"><input [(ngModel)]="row[column.name]" type="radio" attr.value="{{row[column.name]}}" placeholder="{{column.placeHolder}}" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" class="form-control" value="{{row[column.name]}}" style=" text-align: left !important;" [attr.readonly]="controlOptions[column.name].readonly ? '':null" [attr.disabled]="controlOptions[column.name].disabled ? '':null" [required]="controlOptions[column.name].required" ><div class="validation" *ngIf="(row[column.name] == '' || row[column.name] == null) && controlOptions[column.name].required">{{controlOptions[column.name].validationText}}</div></span>
+              <span *ngIf="column.dataType == 'textarea'"><textarea [(ngModel)]="row[column.name]" attr.value="{{row[column.name]}}" appAutosize [maxlength]="column.options.maxLength" style="text-align: left !important;resize:inherit;overflow:hidden;" class=" form-control" value="{{row[column.name]}}" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [attr.readonly]="controlOptions[column.name].readonly ? '':null" [attr.disabled]="controlOptions[column.name].disabled ? '':null" [required]="controlOptions[column.name].required" >{{row[column.name]}}</textarea><div class="validation" *ngIf="(row[column.name] == '' || row[column.name] == null) && controlOptions[column.name].required">{{controlOptions[column.name].validationText}}</div></span>
+              <span *ngIf="column.dataType == 'peoplepicker'"><app-people-picker [(ngModel)]="row[column.name]" ngDefaultControl id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [controlOptions]="controlOptions[column.name]" [fieldName]="column.name" (onPeoplePickerChange)="peoplePickerChange($event,column.name,parentIndex)"></app-people-picker></span>
+              <span *ngIf="column.dataType == 'processlookup'"><app-process-lookup ngDefaultControl [(ngModel)]="row[column.name]" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [formDataJSON]="formDataJSON" [controlOptions]="controlOptions[column.name]" [fieldName]="column.name" (onProcessLookupChange)="onchange({event:'lookup',type:'change',rowIndex:parentIndex, currentRow:row, currentColumn:column.name, value:$event})"></app-process-lookup></span>
+              <span *ngIf="column.dataType == 'databaselookup'"><app-database-lookup ngDefaultControl [(ngModel)]="row[column.name]" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [formDataJSON] = "formDataJSON" [controlOptions]="controlOptions[column.name]" [fieldName]="column.name"></app-database-lookup></span>
+              <span *ngIf="column.dataType == 'select'"><select [(ngModel)]="row[column.name]" class=" form-control" style="text-align: left !important;" id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" attr.value="{{row[column.name]}}" [(ngModel)]="row[column.name]" [attr.readonly]="controlOptions[column.name].readonly ? '':null" [attr.disabled]="controlOptions[column.name].disabled ? '':null" [required]="controlOptions[column.name].required" ><option *ngFor="let option of column.options" value="{{option.value}}">{{option.text}}</option></select><div class="validation" *ngIf="(row[column.name] == '' || row[column.name] == null) && controlOptions[column.name].required">{{controlOptions[column.name].validationText}}</div></span>
+              <span *ngIf="column.dataType == 'formula'"><textarea [(ngModel)]="row[column.name]" attr.value="{{row[column.name]}}" appAutosize appDynamicNumber id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" class="form-control" style=" text-align: left !important;" [attr.readonly]="'true'" [attr.disabled]="'true'" [required]="'false'">{{row[column.name]}}</textarea></span>
+              <span *ngIf="column.dataType == 'date'"><app-date-time-picker [(ngModel)]="row[column.name]" ngDefaultControl id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [controlOptions]="controlOptions[column.name]" (onDatePickerChange)="onchange({event:'datetimepicker',type:'change',rowIndex:parentIndex, currentRow:row, currentColumn:column.name, value:$event})" [required]="controlOptions[column.name].required"></app-date-time-picker></span>
+              <span *ngIf="column.dataType == 'datetime'"><app-date-time-picker [(ngModel)]="row[column.name]" ngDefaultControl id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [controlOptions]="controlOptions[column.name]" (onDatePickerChange)="onchange({event:'datetimepicker',type:'change',rowIndex:parentIndex, currentRow:row, currentColumn:column.name, value:$event})" [required]="controlOptions[column.name].required"></app-date-time-picker></span>
+              <span *ngIf="column.dataType == 'time'"><app-date-time-picker [(ngModel)]="row[column.name]" ngDefaultControl id="{{parentIndex+1}}{{column.name}}" name="{{column.name}}" [controlOptions]="controlOptions[column.name]" (onDatePickerChange)="onchange({event:'datetimepicker',type:'change',rowIndex:parentIndex, currentRow:row, currentColumn:column.name, value:$event})" [required]="controlOptions[column.name].required"></app-date-time-picker></span>
+            </td> 
+
+				<td *ngIf="tableJson.TableSettings.removeRowIcon == true" (click)="removeRow(parentIndex)" class="removebuttontd repeatingTableButtons form-repeatingTableButtons" style="border: 0px !important; vertical-align: middle !important;width:4%;">
+					<a [style.visibility]="!controlOptions.readonly ? 'visible':'hidden'" id="{{$index+1}}-removebutton" class="rftableremovebutton"
+						style="cursor:pointer;"><img src="assets/images/form_controls/row_remove.png" title="remove row" style="width: 20px; border: 0px;"></a>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot class="table-footer" style="border-bottom: 0px; border-left: 0px; border-right: 0px; background:#ececec;color:black;">
+			<tr class="table-footer-row">
+				<td *ngIf="tableJson.TableSettings.displayIndex" class="table-footer-displayIndex" style="text-align:center; width:4% !important; border:0px !important; border-bottom-left-radius: 4px;"></td>
+				<td *ngFor="let footer of tableJson.Columns; let tempIndex = index" style="border-bottom: 0px; border-left: 0px; border-right: 0px !important;padding-right:1% !important;">
+					<span *ngIf="tableJson.Columns[tempIndex+1] != undefined && tableJson.Columns[tempIndex+1].footer != '' && tableJson.Columns[tempIndex+1].footer != undefined">
+                    <label style="float:right;">{{tableJson.Columns[tempIndex+1].footerLabels}} : </label>
+                </span>
+					<span *ngIf="footer.footer == 'sum' "><label style="float:right;"><app-number-field [isFooter]="true" ngDefaultControl [(ngModel)]="formDataJSON[tableJson.TableSettings.name+'Footer'+tableJson.Columns[tempIndex].name]" [controlOptions]="controlOptions[footer.name]"></app-number-field></label></span>
+				</td>
+				<td *ngIf="tableJson.TableSettings.addRowIcon == true" (click)="addNewRow()" id="{{tableJson.TableSettings.name}}header-addbutton" class="removebuttontd repeatingTableButtons form-repeatingTableButtons table-add-row" style="border: 0px !important;vertical-align: middle !important; border-bottom-right-radius: 4px; height:26px;">
+					<a [style.visibility]="!controlOptions.readonly ? 'visible':'hidden'" class="rftableaddbutton" id="header-addbutton"
+						style=""><img src="assets/images/form_controls/row_add.png" style="width: 20px; border: 0px;" title="add row"></a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

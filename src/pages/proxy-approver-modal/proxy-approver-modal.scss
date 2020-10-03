@@ -1,0 +1,170 @@
+page-proxy-approver-modal {
+
+    .toolbar-background{
+        border-bottom-width: 0!important
+    }
+    
+
+}
+
+.ios{
+  @media (max-width: 767px)
+{
+  @media screen and(orientation: landscape) {
+    ion-modal{
+      .modal-wrapper page-proxy-approver-modal{
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        width: 90%;
+        height: 65%;
+      }
+      ion-backdrop
+      {
+        visibility: visible
+      }
+    }
+  }
+  @media screen and(orientation: portrait) {
+    ion-modal{
+      .modal-wrapper page-proxy-approver-modal{
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        width: 100%;
+        height: 52%;
+      }
+      ion-backdrop
+      {
+        visibility: visible
+      }
+    }
+  }
+}
+@media (min-width: 767px)
+{
+  @media screen and(orientation: landscape) {
+    ion-modal{
+      .modal-wrapper page-proxy-approver-modal{
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        width: 80%;
+        height: 32%;
+      }
+      ion-backdrop
+      {
+        visibility: visible
+      }
+    }
+  }
+  @media screen and(orientation: portrait) {
+    ion-modal{
+      .modal-wrapper page-proxy-approver-modal{
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
+        width: 90%;
+        height: 34%;
+      }
+      ion-backdrop
+      {
+        visibility: visible
+      }
+    }
+  }
+}
+}
+
+.md{
+  @media (max-width: 767px)
+  {
+    @media screen and(orientation: landscape) {
+      ion-modal{
+        .modal-wrapper page-proxy-approver-modal{
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          position: absolute;
+          width: 90%;
+          height: 68%;
+        }
+        ion-backdrop
+        {
+          visibility: visible
+        }
+      }
+    }
+    @media screen and(orientation: portrait) {
+      ion-modal{
+        .modal-wrapper page-proxy-approver-modal{
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          position: absolute;
+          width: 100%;
+          height: 55%;
+        }
+        ion-backdrop
+        {
+          visibility: visible
+        }
+      }
+    }
+  }
+  @media (min-width: 767px)
+  {
+    @media screen and(orientation: landscape) {
+      ion-modal{
+        .modal-wrapper page-proxy-approver-modal{
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          position: absolute;
+          width: 80%;
+          height: 48%;
+        }
+        ion-backdrop
+        {
+          visibility: visible
+        }
+      }
+    }
+    @media screen and(orientation: portrait) {
+      ion-modal{
+        .modal-wrapper page-proxy-approver-modal{
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          position: absolute;
+          width: 90%;
+          height: 40%;
+        }
+        ion-backdrop
+        {
+          visibility: visible
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+list-item {
+    .child {
+        background: #e9e9e9;
+        color: #000;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .label {
+        margin: 0px;
+    }
+    .list {
+        margin-bottom: 0px;
+    }
+
+    .item-inner {
+        padding-right: 0px !important;
+    }
+
+    .first {
+        padding-top: 8px;
+    }
+
+    .last {
+        padding-bottom: 8px;
+    }
+     div.searchbar-input-container > div.searchbar-search-icon
+    {
+      background-image: url("./../assets/icon/search_placeholder.png")
+    }
+
+}

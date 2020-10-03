@@ -1,0 +1,15 @@
+
+<ion-tabs #ionTabs [scrollable-tabs]="ionTabs" [selectedIndex]="myIndex">
+    <div *ngIf="globalservice.toggleSearch && togglebackdrop" style="height:100%;width:100%;z-index:9999;position:absolute;opacity:0.3;background-color: #cacaca">
+    </div>
+    <ion-tab [root]="pendingTasksRoot" tabTitle="Tasks" color="Badge" tabBadgeStyle="Badge" tabBadge="{{taskcount}}" tabIcon="pendingtasks"></ion-tab>
+    <ion-tab [root]="createNewRoot" tabTitle="Create" tabIcon="createnew"></ion-tab>
+    <ion-tab [root]="submissionsRoot" tabTitle="Submissions" tabIcon="submissions"></ion-tab>
+    <ion-tab [root]="notificationsRoot" tabTitle="Notifications" tabBadgeStyle="Badge" tabBadge="{{inboxcount}}" tabIcon="notifications"></ion-tab>
+    <ion-tab [root]="reportsRoot" tabTitle="Reports" tabIcon="reports"></ion-tab>
+    <ion-tab [root]="pivotsRoot" tabTitle="Pivots" tabIcon="pivots"></ion-tab>
+    <ion-tab [root]="addonsRoot" tabTitle="Add-ons" tabIcon="addons"></ion-tab>
+    <ion-tab [root]="processLookupsRoot" tabTitle="Lookups" tabIcon="lookups"></ion-tab>
+    <ion-tab [root]="processMetricsRoot" tabTitle="Metrics" tabIcon="metrics"></ion-tab>
+    <ion-tab [root]="processSettingsRoot" tabTitle="Process Settings" tabIcon="processsettings"></ion-tab>
+</ion-tabs>

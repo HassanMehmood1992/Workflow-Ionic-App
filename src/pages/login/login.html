@@ -1,0 +1,56 @@
+<ion-header>
+   <div style="height:20px; background-color: #061D49;">
+
+   </div>
+ <network>
+  
+</network>
+  
+</ion-header>
+
+<ion-content padding text-center>
+ 
+
+ <div class="spacer"></div>
+          <div class="">
+           <img src="assets/imgs/loginscreentop.png" style=" width: 275px; height: 80;"> 
+          </div>
+           <div class="spacer2"></div>
+    
+      <div class="row " style="justify-content:center;">
+  
+          
+          <form [formGroup]="loginForm">
+                    <ion-item style="border-color: 061C4A;  background-color: white;  border: 1px solid;   border-radius: 4px;" [class.invalid]="!username.valid && username.touched">
+                      <ion-label style="margin:0px;">
+                        <img height="25px" width="25px"  src="assets/icon/login_user.png">
+                      </ion-label>
+                      <ion-input clearInput formControlName="username" maxlength="20" type="text" placeholder="Active Directory\\Windows ID" autocorrect="off" autocapitalize="none" id="username"></ion-input>
+                   
+                     </ion-item>
+                    <div [ngStyle]="{
+                      'visibility':  username.hasError('required') && username.touched ? 'visible' : 'hidden'
+                      }" style="text-align: left; padding-left: 10px;"class="invalid">
+                      <p class="form-validation-warning">Abbvie 511 is required</p>
+                    </div>
+           
+           
+                    <ion-item style="border-color: 061C4A;  background-color: white;  border: 1px solid;   border-radius: 4px;" [class.invalid]="!password.valid && password.touched">
+                      <ion-label style="margin:0px;">
+                        <img  height="25px" width="25px" src="assets/icon/login_password.png">
+                      </ion-label>
+                      <ion-input type="password" maxlength="50" placeholder="Password" [formControl]="password" id="password"></ion-input>
+                    </ion-item>
+                    <div [ngStyle]="{
+                      'visibility': password.hasError('required') && password.touched ? 'visible' : 'hidden'
+                    }" style="text-align: left; padding-left: 10px;"class="invalid">
+                      <p class="form-validation-warning">Password is required</p>
+                    </div>
+
+                <button ion-button  block (click)="login()" [disabled]="!loginForm.valid" style="background: #061C4A;box-shadow:none;">Login</button> 
+             
+            </form>
+      </div>
+
+
+</ion-content>

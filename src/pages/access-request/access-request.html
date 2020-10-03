@@ -1,0 +1,36 @@
+<!--
+  Generated template for the AccessRequestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <h5 style="color: white;    text-align: left;    margin: 0;    text-overflow: ellipsis;   white-space: nowrap;">Request Access</h5>
+    <button ion-button icon-only menuToggle start (click)="gotoDirectory()">
+      <ion-icon name="ios-arrow-back"></ion-icon>
+    </button>
+  </ion-toolbar>
+  <network></network>
+</ion-header>
+
+
+<ion-content no-padding>
+
+  <form [formGroup]="accessForm">
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;" no-lines>
+      <ion-input placeholder="Process ID" type="text" no label formControlName="processid">
+      </ion-input>
+    </ion-item>
+
+    <ion-item no-lines>
+      <ion-textarea formControlName="reason" maxlength="250"  rows="5" placeholder="Specify reason for access" no label>
+      </ion-textarea>
+    </ion-item>
+
+    <button [disabled]="!accessForm.valid" ion-button block (click)="submitRequest()" style="background: #061C4A;margin: 0px;border-radius: 0px;box-shadow:none; ">Submit</button>
+
+  </form>
+
+</ion-content>

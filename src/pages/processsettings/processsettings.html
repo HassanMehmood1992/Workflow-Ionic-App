@@ -1,0 +1,132 @@
+<!--
+  Generated template for the ProcesssettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+  <ion-toolbar>
+      <div class="row" style="padding-left: 0px;">
+          <img style="margin: 5px;border-radius: 7px;" height="37px" width="37px" src="{{globalservice.processImg}}">
+          <div class="item" style="background: #061D49;    padding: 3px 0px 0px 5px;    border: none; width:80%;">
+              <h5 style="color: white;    text-align: left;    margin: 0;  overflow: hidden;   white-space: nowrap;text-overflow: ellipsis;">{{globalservice.name}}</h5>
+              <h6 style="color: white;    text-align: left;    margin: 0; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">{{globalservice.processOrganization}}</h6>
+          </div>
+      </div>
+      <button ion-button icon-only menuToggle start (click)="gotomyprocess()">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+  </ion-toolbar>
+  <network></network>
+</ion-header>
+
+
+<ion-content padding-top>
+
+  <ion-list no-lines>
+
+    <ion-list-header style="background-color: #ebebeb;font-size: unset;letter-spacing: unset;text-transform: unset;">
+      User Settings
+    </ion-list-header>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>Email Notifications</ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="emailNotifications" checked="false" (ionChange)="toggle('email');"></ion-toggle>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>Process Notifications</ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="processNotifications" checked="false" (ionChange)="toggle('notifications');"></ion-toggle>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>
+        <h2>Out of Office Delegation</h2>
+        <p *ngIf="allowOutOfOffice.Allow" style="white-space: normal;">{{processSetting?.Out_of_Office?.Delegated_To?.DisplayName}}</p>
+        <p *ngIf="allowOutOfOffice.Allow" style="white-space: normal;">Starting from {{processSetting?.Out_of_Office?.Start_Date| rfdateformat2}} 12:00 AM to {{processSetting?.Out_of_Office?.End_Date|
+          rfdateformat2}} 11:59 PM</p>
+      </ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="allowOutOfOffice.Allow" checked="false" (ionChange)="toggle('outofoffice', $event);"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Proxy Approver</h2>
+        <p *ngIf="proxyApprover.Allow">{{processSetting?.Proxy_Approver?.DisplayName}}</p>
+      </ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="proxyApprover.Allow" (ionChange)="toggle('proxy', $event);"></ion-toggle>
+    </ion-item>
+
+
+    <ion-list-header style="background-color: #ebebeb;font-size: unset;letter-spacing: unset;text-transform: unset;">
+      Process Details
+    </ion-list-header>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <p style="white-space:normal;">{{processGlobalSetting?.Process_Settings?.PROCESS_DESCRIPTION}}</p>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2>Organization</h2>
+      <p style="white-space:normal;">{{processGlobalSetting?.Process_Settings?.BUSINESS_ORGANIZATION}}</p>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2>ID</h2>
+      <ion-note item-end>{{processGlobalSetting?.Process_Settings?.PROCESS_IDENTIFIER}}</ion-note>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2>Version</h2>
+      <ion-note item-end>{{processGlobalSetting?.Process_Settings?.PROCESS_VERSION}}</ion-note>
+    </ion-item>
+
+    <!-- <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2>Owner</h2>
+      <ion-note item-end>{{processGlobalSetting?.Process_Owner?.DisplayName}}</ion-note>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2>Administrator</h2>
+      <ion-note item-end>{{processGlobalSetting?.Process_Admin?.DisplayName}}</ion-note>
+    </ion-item> -->
+    <ion-item style="border-bottom: 1px solid #d4d4d4;" (click)="toggleGroup()">
+      <h2>Process Owner and Administrator
+        <span style="float:right">
+          <img [src]="isGroupShownmethod() ? 'assets/icon/arrow_up.png' : 'assets/icon/arrow_down.png'"
+            style="max-height: 20px;max-width: 20px;height: 20px;width: 20px;">
+        </span>
+      </h2>
+
+      <ion-spinner *ngIf="isGroupShownmethod() && processGlobalSettingLive==null" style="height:30px;display: block;margin: auto;" name="ios"></ion-spinner>
+
+      <h3 *ngIf="isGroupShownmethod() && processGlobalSettingLive!=null" style="padding-top:10px">Owner
+        <span style="float:right">
+          <p style="white-space: normal;">{{processGlobalSettingLive[0]?.Process_Owner?.DisplayName}}</p>
+        </span>
+      </h3>
+      
+      
+      <h3 *ngIf="isGroupShownmethod() && processGlobalSettingLive!=null">Administrator
+        <span style="float:right">
+          <p style="white-space: normal;">{{processGlobalSettingLive[0]?.Process_Admin?.DisplayName}}</p>
+        </span>
+      </h3>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2>Time Zone</h2>
+      <ion-note item-end>GMT{{processGlobalSetting?.Process_Settings?.PROCESS_TIMEZONE}}</ion-note>
+    </ion-item>
+
+    <ion-item [hidden]="processGlobalSetting?.Process_Settings?.PROCESS_ALERT?.AlertText == undefined" style="border-bottom: 1px solid #d4d4d4;">
+      <h2>Process Alert</h2>
+      <p style="white-space:normal;" [hidden]="processGlobalSetting?.Process_Settings?.PROCESS_ALERT?.AlertText == undefined">{{processGlobalSetting?.Process_Settings?.PROCESS_ALERT?.AlertText}}</p>
+      <p>Expires on {{processGlobalSetting?.Process_Settings?.PROCESS_ALERT?.ExpiryDate | rfdateformat}} UTC {{processGlobalSetting?.Process_Settings?.PROCESS_TIMEZONE}}</p>
+    </ion-item>
+
+  </ion-list>
+
+
+</ion-content>

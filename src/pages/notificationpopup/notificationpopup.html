@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-list padding-top no-lines style="background-color: #efefef;border-radius: 15px;margin: 0px;">
+    <ion-item style="background-color: #efefef; border-bottom: 0.4px solid;border-bottom-color: #cacaca; ">
+
+      <h2 style="width: 70%;overflow: hidden;text-overflow: ellipsis;float: left;">{{notification.FromDisplayName}}</h2>
+      <h3 [class.unread]="notification.NotificationAction === 'Pending'" style="float:right">{{ notification.DateCreatedProcessOffset| whatsappdateformatter }}</h3>
+      <br>
+
+      <p style="white-space: normal;line-height: 1.1em;height: 2.2em;overflow: hidden;-webkit-line-clamp: 2;-webkit-box-orient: vertical;display: -webkit-box;"
+        [class.unread]="notification.NotificationAction === 'Pending'">{{notification.Message | decodeUriComponent}} </p>
+    </ion-item>
+  </ion-list>
+</ion-header>
+<ion-content style="background-color: #efefef; border-radius: 15px;">
+  <div *ngIf="notification.Reference" (click)="openForm()" style="background-color: #efefef; border-bottom: 0.4px solid;border-bottom-color: #cacaca; ">
+
+    <img src="assets/icon/Form.png" style="border-radius: 10px;max-height: 35px;max-width: 35px;height: 35px;width: 35px; float: left; margin: 3px 5px 0px 13px;">
+    <h2 style="margin: 5px 5px 0px 13px;;overflow: hidden;white-space: nowrap;font-size: 1.7rem;font-weight: normal;color: #007AFF;text-decoration: underline;">{{notification.Reference}}</h2>
+    <h3 style="margin: 0px 5px 10px 13px;;overflow: hidden;white-space: nowrap;font-size: 1.4rem;font-weight: normal;">{{notification.ProcessName}}</h3>
+  </div>
+  <div style="background-color: #efefef; border-bottom: 0.4px solid;border-bottom-color: #cacaca; ">
+    <p style="white-space: normal;margin:5px 10px 0px 17px;" [innerHTML]="decodeText(notification.MessageBody)"></p>
+  </div>
+
+</ion-content>
+<ion-footer>
+  <div class="row" style="  background-color: #efefef;
+  justify-content: center;
+  border-top: 0.4px solid;
+  border-top-color: #cacaca; 
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  color: #007aff">
+    <button ion-button block color="rapidBG" style="color: #007aff;border-radius:15px;box-shadow:none;" (click)="deletenotification(notification)">Delete</button>
+  </div>
+
+
+</ion-footer>

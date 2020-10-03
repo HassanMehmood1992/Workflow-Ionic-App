@@ -1,0 +1,23 @@
+<!-- Generated template for the FormListItemComponent component -->
+<ion-grid>
+
+		<!--<ion-row (click)="setLookupValues(row)">-->
+      <ion-row >
+			<div style=" padding: 5px" *ngIf="data.lookupDetails.selectionType != 'single'">
+				<input type="checkbox" [checked]="row.isChecked">
+			</div>
+			<ion-col *ngFor="let column of displaycols" style="border-bottom: 0.5px solid;border-bottom-color: #cacaca;">
+				<span *ngIf="column.type == 'peoplepicker'  && column.columnHeading != undefined ">{{row[column.columnName][0].DisplayName}}</span>
+				<span *ngIf="column.type == 'text'  && column.columnHeading != undefined">{{row[column.columnName]}}</span>
+				<span *ngIf="column.type == 'url'  && column.columnHeading != undefined">
+					<span *ngFor="let url of row[column.columnName]">
+						<a href="{{url.url}}">{{url.title}}</a>;
+					</span>
+				</span>
+				<span *ngIf="column.type == 'datetime'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat}}</span>
+				<span *ngIf="column.type == 'date'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat2}}</span>
+				<span *ngIf="column.type == 'time'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat3}}</span>
+			</ion-col>
+			<hr style="color:#cacaca">
+		</ion-row>
+	</ion-grid>

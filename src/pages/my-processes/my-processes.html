@@ -1,0 +1,202 @@
+<!--
+  Generated template for the MyProcessesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header *ngIf="!toggleSearch">
+
+  <ion-navbar>
+    <ion-title>Favorites</ion-title>
+    <ion-buttons [hidden]="globalservice.hideshowsearch" end>
+      <button ion-button icon-only (click)="toggleSearch = !toggleSearch; searchField = ''; togglebackdrop=true">
+        <img style="margin-right: 5px" height="25px" width="25px" src="assets/icon/search.png">
+      </button>
+      <button (click)="toggleSort = !toggleSort;" ion-button icon-only>
+        <img style="margin-right: 10px" height="25px" width="25px" [src]="toggleSort ? 'assets/icon/sort_on.png' : 'assets/icon/sort_off.png'">
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+
+  <network></network>
+</ion-header>
+
+<ion-header *ngIf="toggleSearch">
+  <ion-toolbar>
+    <ion-searchbar focuser style="background-color: #ffffff ;" [(ngModel)]="searchField" placeholder="Filter contents below..."
+      [showCancelButton]="true" (ionFocus)="togglebackdrop = true" (ionBlur)="searchField == '' ? toggleSearch = false : toggleSearch = true; togglebackdrop = false"
+      (ionCancel)="toggleSearch = !toggleSearch; searchField = ''">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="toggleSearch && togglebackdrop" style="height:100%;width:100%;z-index:9999;position:absolute;opacity:0.3;background-color: #cacaca">
+  </div>
+
+  <div [hidden]="MyProcesses.length > 0" class="screen-center">
+    <div style="padding: 6% 3% 6% 3%;
+                  text-align: center;
+                  background-color: #eeeeee;
+                  border: 1px dashed #a5a5a5;
+                  width: 50%;">
+      <h4 style="color:#837B79;text-align:center;font-size:1.05em">No process available please add from directory.</h4>
+    </div>
+  </div>
+
+
+
+  <ion-list no-lines>
+
+    <div *ngFor="let process of MyProcesses | searchFilter: searchField | orderBy:(toggleSort?'ProcessName':'LastModified'):(toggleSort?'':'desc')">
+      <ion-item-sliding #slidingitem *ngIf="process.Status == 'Active' " #itemsliding style="border-bottom: 1px solid #d4d4d4;">
+
+        <ion-item style="padding-left: 0px;" detail-push (click)="gotoProcess(process)">
+         
+          <ion-grid style="padding: 0px 0px 0px 10px;">
+            <ion-row>
+              <ion-col col-12 style="padding: 0px 0px 0px 0px;">
+                <div style="padding-bottom: 5px;">
+
+                  <div class="" style="">
+                    <div style="clear:both;">
+                      <div style="width: 60px;float:left;">
+                        <img src="{{process?.ProcessImage}}" style="border-radius: 10px;max-height: 60px;max-width: 60px;height: 60px;width: 60px;">
+                      </div>
+                      <ion-row>
+                        <ion-col col-8 style="padding: 0px 0px 0px 0px;">
+                          <div style="padding-left:7px">
+                            <h2 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.7rem;font-weight: normal;">{{ process?.ProcessName }}</h2>
+                            <h3 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.5rem;font-weight: normal;">{{ process?.OrganizationName }}</h3>
+
+
+
+                          </div>
+                        </ion-col>
+                        <ion-col col-4 style="padding: 0px 0px 0px 0px;">
+                          <h3 style="text-align: right;" [ngClass]="{'bluecolor': (getProcessCount(process?.ProcessID) != 0), 'greycolor': (getProcessCount(process.ProcessID) == 0)}">{{ process?.LastModified | whatsappdateformatter }}</h3>
+                          <span style="text-align: right; display:block;">
+                            <ion-badge color="Badge" *ngIf="getProcessCount(process?.ProcessID) != 0" style="float:right">{{getProcessCount(process?.ProcessID)}}</ion-badge>
+                            <img *ngIf="processSetting[process.ProcessID]?.processUserSettings?.Mute_Process?.Allow === 'True'" style="margin-right: 5px"
+                              height="17px" width="17px" src="assets/icon/mute-volume.png">
+                          </span>
+                        </ion-col>
+                      </ion-row>
+                      <p style="padding-left:7px; margin:0px; font-size: 1.4rem;font-weight: normal; color: #6f6f6f; overflow: hidden;white-space: nowrap; text-overflow:ellipsis;">{{ process.RecentNotification | decodeUriComponentSingle}}
+                        <span style="float:right" *ngIf="getProcessLock(process.ProcessID) == 1 && getProcessLockType() == 'update' && globalservice.isConnected">
+                          <ion-spinner style="height:12px;" name="ios"></ion-spinner>Updating process</span>
+                          <span style="float:right" *ngIf="getProcessLock(process.ProcessID) == 1 && getProcessLockType() == 'update' && !globalservice.isConnected">
+                          Pending update</span>
+                      </p>
+                    </div>
+
+
+                  </div>
+                </div>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+
+        </ion-item>
+        <ion-item-options side="right">
+          <button style="background-color: #E84242;" ion-button (click)="removeProcess(process, itemsliding)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/Remove.png"> Remove
+          </button>
+          <button *ngIf="processSetting[process.ProcessID]?.processUserSettings?.Mute_Process?.Allow === 'False' || isUndefined(processSetting[process.ProcessID]?.processUserSettings?.Mute_Process)" ion-button style="background-color: #8e8e93;"
+            (click)="muteProcess(process,slidingitem)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/mute-volume_white.png"> &nbsp;&nbsp;&nbsp;Mute&nbsp;&nbsp;&nbsp;
+          </button>
+          <button *ngIf="processSetting[process.ProcessID]?.processUserSettings?.Mute_Process?.Allow === 'True'" ion-button style="background-color: #8e8e93;"
+            (click)="muteProcess(process,slidingitem)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/unmute.png"> &nbsp;Unmute&nbsp;
+          </button>
+          <button ion-button style="background-color: #0082BA;" (click)="shareProcess(process, itemsliding)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/Share.png"> &nbsp;&nbsp;&nbsp;Share&nbsp;&nbsp;
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+
+
+      <ion-item (click)="openModalPendingApproval(process)" detail-push *ngIf="process.Status == 'Pending Access' " style="padding-left: 0px;border-bottom: 1px solid #d4d4d4;">
+        <ion-grid style="padding: 0px 0px 0px 10px;">
+          <ion-row>
+            <ion-col col-12 style="padding: 0px 0px 0px 0px;">
+              <div style="padding-bottom: 5px;">
+
+                <div class="" style="">
+                  <div style="clear:both;">
+                    <div style="width: 60px;float:left;">
+                      <img src="{{process.ProcessImage}}" style="border-radius: 10px;max-height: 60px;max-width: 60px;height: 60px;width: 60px;">
+                    </div>
+                    <ion-row>
+                      <ion-col col-6 style="padding: 0px 0px 0px 0px;">
+                        <div style="padding-left:7px">
+                          <h2 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.9rem;font-weight: normal;">{{ process.ProcessName }}</h2>
+                          <h3 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.7rem;font-weight: normal;">{{ process.OrganizationName }}</h3>
+
+
+
+                        </div>
+                      </ion-col>
+                      <ion-col col-6 style="padding: 0px 0px 0px 0px;">
+                        <br>
+                        <h3 style="text-align: right;" [ngClass]="{'bluecolor': true}">Pending Approval</h3>
+                      </ion-col>
+                    </ion-row>
+                    <p style="padding-left:7px; margin:0px; font-size: 1.4rem;font-weight: normal; color: #6f6f6f; overflow: hidden;white-space: nowrap; text-overflow:ellipsis;">{{(process.Description)}}</p>
+                  </div>
+
+
+                </div>
+              </div>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+      </ion-item>
+
+      <ion-item detail-push *ngIf="process.Status == 'Pending Update' " style="padding-left: 0px;border-bottom: 1px solid #d4d4d4;">
+        <ion-grid style="padding: 0px 0px 0px 10px;">
+          <ion-row>
+            <ion-col col-12 style="padding: 0px 0px 0px 0px;">
+              <div style="padding-bottom: 5px;">
+
+                <div class="" style="">
+                  <div style="clear:both;">
+                    <div style="width: 60px;float:left;">
+                      <img src="{{process.ProcessImage}}" style="border-radius: 10px;max-height: 60px;max-width: 60px;height: 60px;width: 60px;">
+                    </div>
+                    <ion-row>
+                      <ion-col col-6 style="padding: 0px 0px 0px 0px;">
+                        <div style="padding-left:7px">
+                          <h2 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.9rem;font-weight: normal;">{{ process.ProcessName }}</h2>
+                          <h3 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.7rem;font-weight: normal;">{{ process.OrganizationName }}</h3>
+                        </div>
+                      </ion-col>
+                      <ion-col col-6 style="padding: 0px 0px 0px 0px;">
+                        <br>
+                        <h3 style="text-align: right;" [ngClass]="{'bluecolor': true}">Pending Update</h3>
+                      </ion-col>
+                    </ion-row>
+                    <p style="padding-left:7px; margin:0px; font-size: 1.4rem;font-weight: normal; color: #6f6f6f; overflow: hidden;white-space: nowrap; text-overflow:ellipsis;">{{(process.Description)}}</p>
+                  </div>
+
+
+                </div>
+              </div>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+      </ion-item>
+
+    </div>
+  </ion-list>
+
+</ion-content>

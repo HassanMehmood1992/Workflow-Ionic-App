@@ -1,0 +1,377 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+
+
+@import "ionic.globals";
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #488aff,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  searchicon:      #aaaaaa,
+  white:      #ffffff,
+  dark:       #222,
+  rapidflow:  #061D49,
+  rapidBG:  #ececec,
+  Badge:  #84bd00,
+
+  rapidFlowPrimary: (
+    base: #061D49,
+    contrast: #ffffff
+  )
+);
+
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";
+
+//Toolbar default app wide color
+$toolbar-background: #061D49;
+
+//
+
+//Screen center class to show text in midddle of the screen
+.screen-center {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabs-md .tab-button,.tabs-ios .tab-button
+{
+  color: #061D49 !important;
+}
+
+
+
+// app tabs icons
+.ion-ios-favorites,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-favorites
+{
+  content: url('./../assets/icon/favorites_on.png');
+  height: 30px;
+  width: 30px;
+}
+.ion-ios-favorites-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-favorites{
+  content: url('./../assets/icon/favorites_off.png');
+  height: 30px;
+  width: 30px;
+}
+
+.ion-ios-directory,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-directory
+{
+  content: url('./../assets/icon/directory_on.png');
+  height: 30px;
+  width: 30px;
+}
+.ion-ios-directory-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-directory{
+  content: url('./../assets/icon/directory_off.png');
+  height: 30px;
+  width: 30px;
+}
+
+.ion-ios-appsettings,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-appsettings
+{
+  content: url('./../assets/icon/appsettings_on.png');
+  height: 30px;
+  width: 30px;
+}
+.ion-ios-appsettings-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-appsettings{
+  content: url('./../assets/icon/appsettings_off.png');
+  height: 30px;
+  width: 30px;
+}
+
+
+
+// process tab icons
+
+.ion-ios-pendingtasks,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-pendingtasks
+{
+  content: url('./../assets/icon/pendingtasks_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+  color: map-get($colors, rapidflow);
+}
+.ion-ios-pendingtasks-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-pendingtasks{
+  content: url('./../assets/icon/pendingtasks_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+  color: map-get($colors, rapidflow);
+}
+
+.ion-ios-createnew,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-createnew
+{
+  content: url('./../assets/icon/createnew_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-createnew-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-createnew{
+  content: url('./../assets/icon/createnew_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-submissions,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-submissions
+{
+  content: url('./../assets/icon/submissions_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-submissions-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-submissions{
+  content: url('./../assets/icon/submissions_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-reports,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-reports
+{
+  content: url('./../assets/icon/reports_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-reports-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-reports{
+  content: url('./../assets/icon/reports_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-pivots,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-pivots
+{
+  content: url('./../assets/icon/pivots_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-pivots-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-pivots{
+  content: url('./../assets/icon/pivots_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-addons,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-addons
+{
+  content: url('./../assets/icon/addons_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-addons-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-addons{
+  content: url('./../assets/icon/addons_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-lookups,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-lookups
+{
+  content: url('./../assets/icon/lookups_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-lookups-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-lookups{
+  content: url('./../assets/icon/lookups_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-notifications,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-notifications
+{
+  content: url('./../assets/icon/notifications_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-notifications-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-notifications{
+  content: url('./../assets/icon/notifications_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+.ion-ios-processsettings,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-processsettings
+{
+  content: url('./../assets/icon/processsettings_on.png');
+  height: 25px;
+  width: 25px;
+  margin: 5px auto;
+}
+.ion-ios-processsettings-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-processsettings{
+  content: url('./../assets/icon/processsettings_off.png');
+  height: 25px;
+  width: 25px;
+  margin: 5px auto;
+}
+
+.ion-ios-metrics,
+a[aria-controls^=tabpanel-][aria-selected=true]>.ion-md-metrics
+{
+  content: url('./../assets/icon/processmetrics_on.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+.ion-ios-metrics-outline,
+a[aria-controls^=tabpanel-][aria-selected=false]>.ion-md-metrics{
+  content: url('./../assets/icon/processmetrics_off.png');
+  height: 30px;
+  width: 30px;
+  margin: 5px auto;
+}
+
+
+
+
+
+
+
+.md ion-list > .item:last-child, 
+.md ion-list > .item-wrapper:last-child .item, 
+.wp ion-list > .item:last-child, 
+.wp ion-list > .item-wrapper:last-child .item,
+.ios ion-list > .item:last-child, 
+.ios ion-list > .item-wrapper:last-child .item {
+  border-bottom: none; 
+}
+div.toast-container{
+      background: red;
+border-radius: 4px;
+font-weight: bold;
+    }
+
+
+
+.ios{
+  .headerdiv{
+    height: 10px;
+  }
+}
+
+.md{
+  .headerdiv{
+    height: 0px;
+  }
+}
+
+
+div.action-sheet-container
+{
+  overflow: scroll;
+height: 60vh;
+}
+
+
+div.datetime-text{
+    	line-height: 0.8 !important;
+    }
+div.datetime-placeholder
+{
+line-height: 0.8 !important;
+}

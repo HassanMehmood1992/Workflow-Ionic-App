@@ -1,0 +1,50 @@
+<!-- Generated template for the DateTimePickerComponent component -->
+
+<style>
+  input.ng-invalid{border-color: red !important; border-radius: 4px;} 
+  textarea.ng-invalid{border-color: red !important; border-radius: 4px;}
+  .validation{ font-size:11px;color:red;margin-left: 1%;}
+
+    .datePickerRequired{
+      border: 1px solid;
+      border-color: red !important; 
+      background: url(assets/images/form_controls/datetime.png) 99% 2px no-repeat;
+      border-radius: 4px;
+      height: 30px !important;
+    }
+    .datePickerNotRequired{
+      border: 1px solid;
+      background: url(assets/images/form_controls/datetime.png) 99% 2px no-repeat;
+      border-radius: 4px;
+      height: 30px !important;
+      min-height: 30px;
+    }
+
+    .disableDatePicker {
+
+min-height: 30px;
+border-radius: 4px;
+border: 1px solid;
+height: 30px !important;
+background: white;
+
+}
+  </style>
+<div>
+<!--<input id="picker" style="text-align: center;" [(ngModel)]="ngModel" name="picker" class="{{className}}" 
+  [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" [min]="controlOptions.minDate" [max]="controlOptions.maxDate" [selectMode]="controlOptions.selectMode" [rangeSeparator]="controlOptions.rangeSeparator" 
+  (dateTimeChange)="dateTimeChange()" readonly 
+  [ngClass]="{'enableDatePicker': !controlOptions.disabled, 'disableDatePicker': controlOptions.disabled , 'datePickerRequired': !ngModel && controlOptions.required, 'datePickerNotRequired': ngModel}">
+  <owl-date-time (afterPickerOpen)="afterPickerOpen()" (afterPickerClosed)="afterPickerClosed()" [pickerType]="controlOptions.pickerType" [pickerMode]="'dialog'" 
+  [startView]="controlOptions.startView" [startAt]="controlOptions.startAt" [hour12Timer]="controlOptions.hour12Timer" [stepHour]="controlOptions.stepHour" 
+  [stepMinute]="controlOptions.stepMinute" [stepSecond]="controlOptions.stepSecond" [disabled]="controlOptions.disabled" #dt3></owl-date-time>-->
+  <ion-datetime style="position: relative; text-align: center; " displayFormat="{{controlOptions.displayFormatMob}}" 
+  (ionFocus)="afterPickerOpen()" (ionBlur)="afterPickerClosed()" (ionChange)="dateChange()" pickerFormat="{{controlOptions.pickerFormatMob}}" [ngClass]="{'enableDatePicker': !controlOptions.disabled, 'disableDatePicker': controlOptions.disabled , 'datePickerRequired': !ngModel && controlOptions.required, 'datePickerNotRequired': ngModel}"
+  [min]="controlOptions.minDate" [max]="controlOptions.maxDate" placeholder="{{controlOptions.placeholder}}"
+  name="picker" class="{{className}}"  [disabled]="controlOptions.disabled" [(ngModel)]="ngModel"></ion-datetime>
+
+  <div class="validation" *ngIf="!ngModel && controlOptions.required && clicked">
+    {{controlOptions.validationText}}
+  </div>
+</div>
+

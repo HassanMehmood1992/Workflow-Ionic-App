@@ -1,0 +1,38 @@
+<!-- Generated template for the ListItemComponent component -->
+
+
+<!-- <div class="avatar">{{item.index}}</div>
+<div class="item-content">
+    <div class="name">{{item.name}}</div>
+    <div>
+        <span class="badge">{{item.age}} / {{item.gender}}</span>
+        <span>{{item.email}} | {{item.phone}}</span>
+    </div>
+    <div>{{item.address}}</div>
+</div> -->
+
+
+<ion-item no-lines no-padding style="border-bottom: 1px solid #d4d4d4;">
+
+  <button ion-item (click)="toggleGroup(item)" detail-none>
+    <ion-icon item-right name="arrow-down" *ngIf="!isGroupShownmethod(item)" style="font-size: 25px; color: #95989A !important;"></ion-icon>
+    <ion-icon item-right name="arrow-up" *ngIf="isGroupShownmethod(item)" style="font-size: 25px; color: #95989A !important;"></ion-icon>
+    {{item | lookupValueFormatter: {columnOptions: columnOptions, column: column} }}
+  </button>
+
+  <ion-list *ngIf="isGroupShownmethod(item)" no-lines>
+    <ion-item *ngFor="let col of cols; let j = index; let frst=first; let lst=last" class="child" [ngClass]="{'first': frst, last: lst}">
+
+      <p style="color: black;white-space:normal;" class="item-accordion">
+        <b>{{col.DisplayName}}</b>
+      </p>
+      <p *ngIf="columnOptions[col.ShortName].toLowerCase() != 'url'" style="color: #95989A;white-space:normal;" class="item-accordion">{{getLookupColumnValue(item,columnOptions,col.ShortName)}}</p>
+      <p *ngIf="columnOptions[col.ShortName].toLowerCase() == 'url'" style="color: #95989A;white-space:normal;" class="item-accordion">
+        <span *ngFor="let url of item[col.ShortName]">
+            <a href="{{url.url}}">{{url.title}}</a>;
+        </span>
+      </p>
+    </ion-item>
+  </ion-list>
+
+</ion-item>

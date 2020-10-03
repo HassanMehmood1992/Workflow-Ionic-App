@@ -1,0 +1,39 @@
+<!--
+  Generated template for the FormPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-toolbar>
+      <div class="row" style="padding-left: 0px;">
+
+                <div class="item" style="background: #061D49;    padding: 3px 0px 0px 5px;    border: none; width:80%;">
+                    <h5 style="color: white;    text-align: left;    margin: 0;  overflow: hidden;   white-space: nowrap;text-overflow: ellipsis;">{{globalservice.name}}: {{globalservice.reference}}</h5>
+                   
+                </div>
+            </div>
+   
+    <ion-buttons  end>
+          <button  *ngIf="isShareAble" (click)="shareForm()" ion-button icon-only>
+          <img style="margin-right: 10px" height="25px" width="25px" src='assets/icon/Share.png'>
+        </button>
+         <a  *ngIf="downloadlink.length>0"  href="{{downloadlink}}" ion-button icon-only>
+          <img style="margin-right: 10px" height="25px" width="25px" src='assets/icon/export_to_pdf_white.png'>
+        </a>
+        </ion-buttons>
+  </ion-toolbar>
+  </ion-navbar>
+
+<network></network>
+</ion-header>
+
+
+<ion-content>
+
+      <div #container></div>
+
+  
+</ion-content>

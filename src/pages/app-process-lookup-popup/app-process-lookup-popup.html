@@ -1,0 +1,118 @@
+<!--
+  Generated template for the AppProcessLookupPopupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="border-radius: 10px;">
+
+	<ion-navbar style="border-top-left-radius: 10px;border-top-right-radius: 10px;">
+		<ion-title>{{data.lookupDetails.selectorHeading}}</ion-title>
+	</ion-navbar>
+
+
+
+</ion-header>
+<ion-content style="border-radius: 13px;">
+
+	<ion-toolbar color="white" style="width:99.5%;">
+		<ion-searchbar style="background-color: white ;"  [formControl]="searchControl" [(ngModel)]="searchField" placeholder="Filter contents below..." [showCancelButton]="true"
+		 (ionCancel)="searchField = ''">
+		</ion-searchbar>
+		<div style="text-align: right;width: 99.5%;padding-right: 3px;">
+			<button style="color: #007aff;background-color:rgba(0, 0, 0, 0.08);border-radius:8px;min-width: 100px;box-shadow:none;" *ngIf="data.lookupDetails.selectionType != 'single'"
+			 (click)="confirmSelection()" class="button button-ios">Confirm</button>
+			<button style="color: #007aff;background-color:rgba(0, 0, 0, 0.08);border-radius:8px;min-width: 100px;box-shadow:none;" (click)="clearSelection()"
+			 class="button button-ios">Clear</button>
+		</div>
+
+	</ion-toolbar>
+
+
+	<ion-card style="margin: 10px 10px 10px 10px;width: 97%;" *ngIf="data.lookupDetails.selectionType != 'single'">
+		<div (click)="toggleselected($event)">
+			<h3 style="font-size: 1.4rem;font-weight: normal;margin-bottom: 0;margin-top: 0; color: #6f6f6f;padding: 10px 10px 5px 10px;">Selected
+				<span style="float:right">
+					<img [src]="isselected ? 'assets/icon/arrow_up.png' : 'assets/icon/arrow_down.png'" style="max-height: 20px;max-width: 20px;height: 20px;width: 20px;">
+				</span>
+
+			</h3>
+
+		</div>
+		<ion-grid [hidden]="!isselected" style="height: 60px;overflow: scroll;display: block;">
+
+
+			<ion-row style="display:block;">
+				<div *ngFor="let row of tempNgModel ">
+					<div>{{row}}</div>
+				</div>
+			</ion-row>
+		</ion-grid>
+	</ion-card>
+	<ion-grid style="">
+		<ion-row>
+			<div style=" padding: 5px" *ngIf="data.lookupDetails.selectionType != 'single'">
+				<input type="checkbox" (ngModelChange)="selectAll($event)" [(ngModel)]="isAllSelected">
+			</div>
+
+			<ion-col *ngFor="let column of displaycols">
+				<span (click)="toggleSort(column)" style="font-weight:bold;">{{column.columnHeading}}</span>
+				<span *ngIf="sortcol == column.columnName"> <ion-icon [name]=" reverse ? 'arrow-down' : 'arrow-up'"></ion-icon></span>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<!--<ion-grid>
+
+		<ion-row (click)="setLookupValues(row)" *ngFor="let row of rows | lookupSearch: searchField:displaycols | lookupsortFilter: {property: sortcol, order: order, type: sorttype} ">
+			<div style=" padding: 5px" *ngIf="data.lookupDetails.selectionType != 'single'">
+				<input type="checkbox" [checked]="row.isChecked">
+			</div>
+			<ion-col *ngFor="let column of displaycols" style="border-bottom: 0.5px solid;border-bottom-color: #cacaca;">
+				<span *ngIf="column.type == 'peoplepicker'  && column.columnHeading != undefined ">{{row[column.columnName][0].DisplayName}}</span>
+				<span *ngIf="column.type == 'text'  && column.columnHeading != undefined">{{row[column.columnName]}}</span>
+				<span *ngIf="column.type == 'url'  && column.columnHeading != undefined">
+					<span *ngFor="let url of row[column.columnName]">
+						<a href="{{url.url}}">{{url.title}}</a>;
+					</span>
+				</span>
+				<span *ngIf="column.type == 'datetime'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat}}</span>
+				<span *ngIf="column.type == 'date'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat2}}</span>
+				<span *ngIf="column.type == 'time'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat3}}</span>
+			</ion-col>
+			<hr style="color:#cacaca">
+		</ion-row>
+	</ion-grid>-->
+	<div style="height:100%;" [ngClass]="{'virtualClass': rows.length == 0 }">
+	<ion-list no-lines [virtualScroll]="rows"  approxItemHeight="50px">
+		<ion-item *virtualItem="let row" (click)="setLookupValues(row)" style="padding:0px;">
+			<ion-grid>
+				<ion-row>
+			<div style=" padding: 5px" *ngIf="data.lookupDetails.selectionType != 'single'">
+				<input type="checkbox" [checked]="row.isChecked">
+			</div>
+			<ion-col *ngFor="let column of displaycols" style="border-bottom: 0.5px solid;border-bottom-color: #cacaca;">
+				<span *ngIf="column.type == 'peoplepicker'  && column.columnHeading != undefined ">{{row[column.columnName][0].DisplayName}}</span>
+				<span *ngIf="column.type == 'text'  && column.columnHeading != undefined">{{row[column.columnName]}}</span>
+				<span *ngIf="column.type == 'url'  && column.columnHeading != undefined">
+					<span *ngFor="let url of row[column.columnName]">
+						<a href="{{url.url}}">{{url.title}}</a>;
+					</span>
+				</span>
+				<span *ngIf="column.type == 'datetime'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat}}</span>
+				<span *ngIf="column.type == 'date'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat2}}</span>
+				<span *ngIf="column.type == 'time'  && column.columnHeading != undefined">{{row[column.columnName] | rfdateformat3}}</span>
+			</ion-col>
+			</ion-row>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+	</div>
+
+	 <!--<virtual-scroll [items]="rows" (update)="viewPortItems = $event" (change)="onListChange($event)">
+     
+      <form-list-item *ngFor="let item of viewPortItems" [data]="data" [displaycols]="displaycols" [row]="item">
+      </form-list-item>
+
+    </virtual-scroll>-->
+</ion-content>

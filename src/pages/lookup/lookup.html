@@ -1,0 +1,132 @@
+<!--
+  Generated template for the LookupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-header *ngIf="!globalservice.toggleSearch">
+
+
+  <ion-toolbar>
+    <h5 style="color: white;    text-align: left;    margin: 0;    text-overflow: ellipsis;   white-space: nowrap;">Process Lookup: {{lookuptitle}}</h5>
+    <button ion-button icon-only menuToggle start (click)="goBack()">
+      <ion-icon name="ios-arrow-back"></ion-icon>
+    </button>
+    <ion-buttons [hidden]="globalservice.hideshowsearch" end>
+      <button ion-button icon-only (click)="globalservice.toggleSearch = !globalservice.toggleSearch; searchField = ''; togglebackdrop=true">
+        <img style="margin-right: 5px" height="25px" width="25px" src="assets/icon/search.png">
+      </button>
+      <button (click)="globalservice.toggleSort = !globalservice.toggleSort; toggleSortAndPublish(globalservice.toggleSort)" ion-button icon-only>
+        <img style="margin-right: 10px" height="25px" width="25px" [src]="globalservice.toggleSort ? 'assets/icon/sort_on.png' : 'assets/icon/sort_off.png'">
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <network></network>
+</ion-header>
+
+<!-- <ion-header *ngIf="toggleSearch">
+  <ion-toolbar>
+    <ion-searchbar focuser style="background-color: #ffffff ;" [(ngModel)]="searchField" placeholder="Filter contents below..."
+      [showCancelButton]="true" (ionFocus)="togglebackdrop = true" (ionBlur)="searchField == '' ? toggleSearch = false : toggleSearch = true; togglebackdrop = false"
+      (ionCancel)="toggleSearch = !toggleSearch; searchField = ''">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-header *ngIf="globalservice.toggleSearch">
+  <ion-toolbar>
+      <ion-searchbar focuser style="background-color: #ffffff ;" [(ngModel)]="searchField" [formControl]="searchControl" placeholder="Filter contents below..."
+          [showCancelButton]="true" (ionFocus)="togglebackdrop = true" (ionBlur)="searchField == '' ? globalservice.toggleSearch = false : globalservice.toggleSearch = true; togglebackdrop = false"
+          (ionCancel)="globalservice.toggleSearch = !globalservice.toggleSearch; searchField = ''">
+      </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- <ion-list class="accordion-list">
+    <ion-item *ngFor="let item of rows| searchFilter: searchField  | sortFilter: {property: sortColumn, order: order}; let i = index"
+      no-lines no-padding style="border-bottom: 1px solid #d4d4d4;">
+
+      <button ion-item (click)="toggleGroup(item)" detail-none>
+        <ion-icon item-right name="arrow-down" *ngIf="!isGroupShownmethod(item)" style="font-size: 25px; color: #95989A !important;"></ion-icon>
+        <ion-icon item-right name="arrow-up" *ngIf="isGroupShownmethod(item)" style="font-size: 25px; color: #95989A !important;"></ion-icon>
+        {{item | lookupValueFormatter: {columnOptions: columnOptions, column: column} }}
+      </button>
+
+      <ion-list *ngIf="isGroupShownmethod(item)" no-lines>
+        <ion-item *ngFor="let col of cols; let j = index; let frst=first; let lst=last" class="child" [ngClass]="{'first': frst, last: lst}">
+
+          <p style="color: black;white-space:normal;" class="item-accordion">
+            <b>{{col.DisplayName}}</b>
+          </p>
+          <p *ngIf="columnOptions[col.ShortName].toLowerCase() != 'url'" style="color: #95989A;white-space:normal;" class="item-accordion">{{getLookupColumnValue(item,columnOptions,col.ShortName)}}</p>
+          <p *ngIf="columnOptions[col.ShortName].toLowerCase() == 'url'" style="color: #95989A;white-space:normal;" class="item-accordion">
+            <span *ngFor="let url of item[col.ShortName]">
+                <a href="{{url.url}}">{{url.title}}</a>;
+            </span>
+          </p>
+        </ion-item>
+      </ion-list>
+
+    </ion-item>
+  </ion-list> -->
+
+
+
+
+
+
+
+
+
+<!-- ionic virtual scroll..
+  <ion-list #virtualScroll [virtualScroll]="rows| searchFilter: searchField | sortFilter: {property: sortColumn, order: order}" [virtualTrackBy]="trackByLookupDataID" approxItemHeight="49px" approxItemWidth="100%" bufferRatio="9">
+
+      <ion-item *virtualItem="let item" no-lines no-padding style="border-bottom: 1px solid #d4d4d4;">
+          <button ion-item (click)="toggleGroup(item)" detail-none>
+            <ion-icon item-right name="arrow-down" *ngIf="!isGroupShownmethod(item)" style="font-size: 25px; color: #95989A !important;"></ion-icon>
+            <ion-icon item-right name="arrow-up" *ngIf="isGroupShownmethod(item)" style="font-size: 25px; color: #95989A !important;"></ion-icon>
+            {{item | lookupValueFormatter: {columnOptions: columnOptions, column: column} }}
+          </button>
+
+            <ion-list *ngIf="isGroupShownmethod(item)" no-lines>
+                <ion-item *ngFor="let col of cols" class="child">
+        
+                  <p style="color: black;white-space:normal;" class="item-accordion">
+                    <b>{{col.DisplayName}}</b>
+                  </p>
+                  <p *ngIf="columnOptions[col.ShortName].toLowerCase() != 'url'" style="color: #95989A;white-space:normal;" class="item-accordion">{{item | lookupValueFormatter: {columnOptions: columnOptions, column: col.ShortName} }}</p>
+                  <p *ngIf="columnOptions[col.ShortName].toLowerCase() == 'url'" style="color: #95989A;white-space:normal;" class="item-accordion">
+                    <span *ngFor="let url of item[col.ShortName]">
+                        <a href="{{url.url}}">{{url.title}}</a>;
+                    </span>
+                  </p>
+                </ion-item>
+              </ion-list>
+
+      </ion-item>
+    
+    </ion-list> -->
+
+
+    <virtual-scroll [items]="rows" (update)="viewPortItems = $event" (change)="onListChange($event)">
+      <!-- <list-item *ngFor="let item of viewPortItems| searchFilter: searchField  | sortFilter: {property: sortColumn, order: order}" [item]="item" [columnOptions]="columnOptions" [column]="column" [cols]="cols"> -->
+      <list-item *ngFor="let item of viewPortItems" [item]="item" [columnOptions]="columnOptions" [column]="column" [cols]="cols">
+      </list-item>
+
+
+      <ion-spinner style="height:30px;display: block;margin: auto;" name="ios" *ngIf='loadingPage'></ion-spinner>
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)" (icon)="none">
+          <ion-infinite-scroll-content loadingText=""></ion-infinite-scroll-content>
+          
+        </ion-infinite-scroll>
+
+        
+
+    </virtual-scroll>
+
+</ion-content>

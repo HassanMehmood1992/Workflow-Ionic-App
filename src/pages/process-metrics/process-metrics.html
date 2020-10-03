@@ -1,0 +1,84 @@
+<!--
+  Generated template for the ProcessMetricsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+    <ion-toolbar>
+        <div class="row" style="padding-left: 0px;">
+            <img style="margin: 5px;border-radius: 7px;" height="37px" width="37px" src="{{globalservice.processImg}}">
+            <div class="item" style="background: #061D49;    padding: 3px 0px 0px 5px;    border: none; width:80%;">
+                <h5 style="color: white;    text-align: left;    margin: 0;  overflow: hidden;   white-space: nowrap;text-overflow: ellipsis;">{{globalservice.name}}</h5>
+                <h6 style="color: white;    text-align: left;    margin: 0; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">{{globalservice.processOrganization}}</h6>
+            </div>
+        </div>
+        <button ion-button icon-only menuToggle start (click)="gotomyprocess()">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+    </ion-toolbar>
+    <network></network>
+  </ion-header>
+
+
+<ion-content>
+    <ion-item>
+
+        <ion-range [max]="currentYear" [min]="minYear" [step]="1" [(ngModel)]="sliderValue" (ionChange)="performProcessMetricsLoadOperations(0)"
+            id="yearSlider">
+            <ion-label range-left>{{minYear}}</ion-label>
+            <ion-label range-right>{{currentYear}}</ion-label>
+        </ion-range>
+
+    </ion-item>
+    <ion-item>
+        <ion-label>Workflow</ion-label>
+        <ion-select placeholder="" (ionChange)="performProcessMetricsLoadOperations(0)" [(ngModel)]="selectedWorkFlow" interface="action-sheet">
+            <ion-option *ngFor="let option of processWorkflows" [value]="option.WorkflowID">
+                {{ option.WorkflowDisplayName }}
+            </ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-grid>
+        <ion-row>
+
+        </ion-row>
+        <ion-row justify-content-start>
+            <ion-col col-12>
+                <h4>Active Users
+                </h4>
+                <canvas baseChart [datasets]="barChartDataUsers" [labels]="barChartLabelsUsers" [options]="barChartOptionsUsers" [legend]="barChartLegendUsers"
+                    [chartType]="barChartTypeUsers" [colors]="colorsUsers"></canvas>
+            </ion-col>
+            <ion-col col-12>
+                <h4>Transactions
+                </h4>
+                <canvas baseChart [datasets]="barChartDataTransactions" [labels]="barChartLabelsTransactions" [options]="barChartOptionsTransactions"
+                    [legend]="barChartLegendTransactions" [colors]="colorsTransactions" [chartType]="barChartTypeTransactions"></canvas>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <h4>Workflow Turnaround
+                </h4>
+                <canvas *ngIf="workflowTurnaroundNotUpdating" baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+                    [options]="lineChartOptions" [colors]="colorsBellCurve" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+            </ion-col>
+            <ion-col col-12>
+                <h4>Task Breakdown
+                </h4>
+                <br>
+                <div *ngIf="!taskBreakDownHasData">No data available.</div>
+                <div *ngIf="!pieChartSupported">Not supported due to nature of tasks in this process.</div>
+                
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div>
+    </div>
+ <div style="display:block;">
+                <canvas *ngIf="taskBreakDownNotUpdating&&taskBreakDownHasData&&pieChartSupported"  baseChart height="220" [data]="pieChartData" [labels]="pieChartLabels" [colors]="colorsPieChart"
+                    [options]="pieChartOptions" [chartType]="pieChartType"></canvas>
+                </div>
+</ion-content>

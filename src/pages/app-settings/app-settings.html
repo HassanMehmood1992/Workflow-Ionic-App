@@ -1,0 +1,95 @@
+<!--
+  Generated template for the AppSettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Application Settings</ion-title>
+  </ion-navbar>
+ <network></network>
+</ion-header>
+
+
+<ion-content>
+  <ion-list no-lines>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <span style="float:right">
+        <div class="row(" (click)="logout()">
+          <img style="margin-right: 5px" height="30px" width="30px" src="assets/icon/logout.png">
+        </div>
+      </span>
+      <h2> {{user.DisplayName}}</h2>
+      <p id="_AppSettingemail">{{user.Email}}</p>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>Email Notifications</ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="emailNotifications" checked="false" (ionChange)="toggleDebounce('email', $event);"></ion-toggle>
+    </ion-item>
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>Application Notifications</ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="pushNotifications" checked="false" (ionChange)="toggle('push', $event);"></ion-toggle>
+    </ion-item>
+
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>
+        <h2>Out of Office Delegation</h2>
+        <p id="_AppSettingoutofofficename" *ngIf="allowOutOfOffice.Allow">{{userSetting?.Out_of_Office?.Delegated_To?.DisplayName}}</p>
+        <p id="_AppSettingoutofofficedates" style="white-space: normal;" *ngIf="allowOutOfOffice.Allow">Starting from {{userSetting?.Out_of_Office?.Start_Date| rfdateformat2}} 12:00 AM to {{userSetting?.Out_of_Office?.End_Date|
+          rfdateformat2}} 11:59 PM</p>
+      </ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="allowOutOfOffice.Allow" checked="false" (ionChange)="toggle('outofoffice', $event);"></ion-toggle>
+    </ion-item>
+
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <ion-label>
+        <h2>Proxy Approver</h2>
+        <p id="_AppSettingproxyname" *ngIf="proxyApprover.Allow">{{userSetting?.Proxy_Approver?.DisplayName}}</p>
+      </ion-label>
+      <ion-toggle color="secondary" [(ngModel)]="proxyApprover.Allow" (ionChange)="toggle('proxy', $event);"></ion-toggle>
+    </ion-item>
+
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <h2> Restore Data from Server</h2>
+      <span item-end (click)="restoreDataFromServer()">
+        <img height="30px" width="30px" src="assets/icon/refresh.png">
+      </span>
+    </ion-item>
+
+    <ion-item [hidden]="settings?.Value?.AlertText == undefined" style="border-bottom: 1px solid #d4d4d4;">
+      <h2> Application Alert</h2>
+      <p style="white-space:normal;" [hidden]="settings?.Value?.AlertText == undefined" > {{settings?.Value?.AlertText}} </p>
+      <p>Expires on {{settings?.Value?.ExpiryDate | rfdateformat}} UTC</p>
+    </ion-item>
+
+
+    <a style="border-bottom: 1px solid #d4d4d4;" ion-item detail-none href="{{userSetting?.HelpLink}}">
+      Help
+      <br>
+      <p>RapidFlow FAQs and help resources</p>
+    </a>
+    
+
+
+    <ion-item style="border-bottom: 1px solid #d4d4d4;">
+      <p>RapidFlow Platform
+        <span style="float:right" id="_AppSettingrapidFlowPlatform">{{rapidFlowPlatform}}</span>
+      </p>
+      <p>Application Version
+        <span style="float:right" id="_AppSettingrapidFlowapplicationVersion" >{{applicationVersion}}</span>
+      </p>
+      <p>Environment
+        <span style="float:right" id="_AppSettingrapidFlowapplicationenvironment" >{{environment}}</span>
+      </p>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

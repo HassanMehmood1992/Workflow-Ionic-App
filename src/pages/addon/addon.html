@@ -1,0 +1,33 @@
+<!--
+  Generated template for the AddonPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar>
+    <h5 style="color: white;    text-align: left;    margin: 0;    text-overflow: ellipsis;   white-space: nowrap;overflow: hidden;">Addons: {{title}}</h5>
+    <button ion-button icon-only menuToggle start (click)="goBack()">
+      <ion-icon name="ios-arrow-back"></ion-icon>
+    </button>
+    <!-- <button ion-button icon-only menuToggle end (click)="showDataFilterMessage()">
+      <img style="margin-right: 10px" height="25px" width="25px" src='assets/icon/advisoryIcon.png' *ngIf="dataFilter === true">
+    </button> -->
+  </ion-toolbar>
+  <network></network>
+</ion-header>
+
+
+<ion-content>
+
+
+  <ion-card>
+    <ion-card-content style="padding: 5px 5px 5px 5px;">
+      <div #container class="wide-as-needed"></div>
+    </ion-card-content>
+  </ion-card>
+
+
+
+</ion-content>

@@ -1,0 +1,22 @@
+page-process {
+
+    .tab-button-icon{
+        min-width: 30px !important;
+        height: 30px !important;
+    }
+     div.searchbar-input-container > div.searchbar-search-icon
+    {
+      background-image: url("./../assets/icon/search_placeholder.png")
+    }
+    .has-icon .tab-badge
+    {
+        right: calc(50% - 25px);
+    }
+
+    .tab-button-icon {
+        transform: none!important;
+    }
+    .tab-button-text {
+        transform: none!important;
+    }
+}

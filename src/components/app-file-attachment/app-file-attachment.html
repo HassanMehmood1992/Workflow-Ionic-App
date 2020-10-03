@@ -1,0 +1,108 @@
+<div style="position: relative; top: -5px;  line-height: 0.5;" [ngClass]="tempNgModel.length == 0 && controlOptions.required ? 'fileAttachmentRequired': 'fileAttachmentNotRequired'">
+	<label [style.display]="controlOptions.disabled?'none':''" style="width: 100%;cursor: pointer;padding-top:1.5%;color:#bdbdbd;">
+        <div style="">
+            <img src="assets/images/form_controls/attachment_add_256x256.png" style="width: 25px;display: inline;float: left;"/> 
+            <span style="margin-top: 5px;float: left;">Choose File</span>
+        </div>
+
+	 <input accept="application/pdf" id="{{fieldName}}" name="{{fieldName}}" [attr.readonly]="controlOptions.readonly?'':null" [attr.disabled]="controlOptions.disabled?'':null" 
+     [required]="controlOptions.required"   (change)="setFiles()" style="display:none" type="file" [formControl]="myForm.controls[fieldName]" />
+   <div class="validation" *ngIf="myForm.controls[fieldName].invalid && (myForm.controls[fieldName].dirty || myForm.controls[fieldName].touched)">
+    {{controlOptions.validationText}}
+  </div>
+   </label>
+</div>
+
+<div class="">
+	<div style="margin: 0% 0% 1% 0%;font-size:12px;" class="" *ngFor="let file of tempNgModel; let i = index;">
+		<div style="float:left;left: 0px;padding-bottom: 4px;">
+			<span style="margin-right: 10px;">
+           <img *ngIf="!controlOptions.disabled || !controlOptions.readonly" style="width:25px; display:inline;"src="assets/images/form_controls/attachment_remove_256x256.png" (click)="removeFile(file, i)"/>
+         </span>
+			<span><a href="{{file.url}}" target="_blank"> {{file.name}} </a></span>
+			<span style="display:block;" [ngSwitch]="file.size > 1024*1024">
+           <span *ngSwitchCase="true">({{file.size / 1024 / 1024 | number: '1.2-2'}} MB)</span>
+			<span *ngSwitchDefault>({{file.size / 1024 | number: '1.2-2'}} kB)</span>
+			</span>
+		</div>
+	</div>
+</div>
+<div style="margin-left:10px;font-size:12px;" *ngIf="tempNgModel.length == 0 && controlOptions.disabled">
+   No files chosen 
+</div>
+
+
+<style>
+
+    input.ng-invalid{border-color: red !important; border-radius: 4px;} 
+    textarea.ng-invalid{border-color: red !important; border-radius: 4px;}
+    .validation{ font-size:11px;color:red;margin-left: 1%;}
+    .fileAttachmentRequired{
+      border: 1px solid;
+      border-color: red !important; 
+      border-radius: 4px;
+    }
+    .fileAttachmentNotRequired{
+      border: 0px solid;
+    }
+
+	.none {
+		display: none;
+	}
+	
+	table {
+		border-collapse: collapse;
+	}
+	
+	.percent {
+		position: absolute;
+		width: 300px;
+		height: 14px;
+		z-index: 1;
+		text-align: center;
+		font-size: 0.8em;
+		color: white;
+	}
+	
+	.progress-bar {
+		width: 300px;
+		height: 14px;
+		border-radius: 10px;
+		border: 1px solid #CCC;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#6666cc), to(#4b4b95));
+		border-image: initial;
+	}
+	
+	.uploaded {
+		padding: 0;
+		height: 14px;
+		border-radius: 10px;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#66cc00), to(#4b9500));
+		border-image: initial;
+	}
+	
+	.dropbox {
+		width: 15em;
+		height: 3em;
+		border: 2px solid #DDD;
+		border-radius: 8px;
+		background-color: #FEFFEC;
+		text-align: center;
+		color: #BBB;
+		font-size: 2em;
+		font-family: Arial, sans-serif;
+	}
+	
+	.dropbox span {
+		margin-top: 0.9em;
+		display: block;
+	}
+	
+	.dropbox.not-available {
+		background-color: #F88;
+	}
+	
+	.dropbox.over {
+		background-color: #bfb;
+	}
+</style>

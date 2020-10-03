@@ -1,0 +1,36 @@
+<style>
+  input.ng-invalid{border-color: red !important; border-radius: 4px;} 
+  textarea.ng-invalid{border-color: red !important; border-radius: 4px;}
+  .validation{ font-size:11px;color:red;margin-left: 1%;}
+  .databaseLookupRequired{
+      border: 1px solid;
+      border-color: red !important; 
+      background: url(assets/images/form_controls/lookup.png) 99% 2px no-repeat;
+      border-radius: 4px;
+      height: auto !important;
+    }
+    .databaseLookupNotRequired{
+     border: 1px solid;
+      background: url(assets/images/form_controls/lookup.png) 99% 2px no-repeat;
+      border-radius: 4px;
+      height: auto !important;
+    }
+
+    .databaseLookupPlaceholder{
+        color:#999999;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-right: 15%;
+    }
+  </style>
+<div>
+  <div [ngClass]="{'enableProcessLookup': !controlOptions.disabled, 'disableProcessLookup': controlOptions.disabled, 'databaseLookupRequired': ngModel.length == 0 && controlOptions.required, 'databaseLookupNotRequired': ngModel.length >= 0}" class="{{className}}"  
+    (click)="openDialog()" >
+      <span *ngIf="ngModel.length == 0" class="databaseLookupPlaceholder">{{placeHolder}}</span>
+      <span *ngIf="ngModel.length != 0">{{ngModel}}</span>
+  </div>
+  <div class="validation" *ngIf="ngModel.length == 0 && controlOptions.required && clicked">
+    {{controlOptions.validationText}}
+  </div> 
+</div>

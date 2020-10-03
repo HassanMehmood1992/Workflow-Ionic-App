@@ -1,0 +1,26 @@
+page-report {
+
+    .wide-as-needed {
+        overflow: auto;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+      }
+      .scroll { 
+        min-width: 100%;
+      }
+
+      Details{
+        cursor: pointer;
+      }
+      #mainTable_wrapper{
+        overflow-y: scroll;
+      }
+
+}
+
+
+
+.dt-rowReorder-float{
+  display: none !important;
+}

@@ -1,0 +1,106 @@
+<!--
+  Generated template for the LookupActionModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+
+<ion-header>
+
+</ion-header>
+
+<ion-content style="background-color: #efefef; border-radius: 15px;">
+
+  <div style="padding: 10px 10px 0px 10px;">
+    <div style="width: 32px;float:left;">
+      <img src="assets/icon/change_approval.png" style="max-height: 32px;max-width: 32px;height: 32px;width: 32px; float: left; margin: 5px 0px 0px 0px;">
+    </div>
+    <div style="margin-left:37px">
+      <h2 style="margin: 0px 5px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.9rem;font-weight: normal;">{{task?.FromUserDisplayName}}</h2>
+      <h3 style="margin: 0px 5px 0px 0px;overflow: hidden;white-space: nowrap;font-size: 1.4rem;font-weight: normal;">{{task?.LookupName}}</h3>
+    </div>
+    <hr style=" background-color: #c9c9c9;height: 1px;">
+  </div>
+
+  <div class='row' *ngIf="task.ItemStatus === 'bulkinsert'">
+      <h3 style="margin: 0px 5px 0px 0px;overflow: hidden;white-space: normal;font-size: 1.4rem;font-weight: normal;padding: 20px 0px 0px 10px;"> Multiple items have been created. Please open the lookup to view these items.</h3>
+  </div>
+
+  <ion-grid no-padding *ngIf="task.ItemStatus === 'created' || task.ItemStatus === 'delete' || task.ItemStatus === 'restore'" style="border-radius: 15px;">
+    <ion-row align-items-center justify-content-center no-padding no-margin>
+      <ion-col align-self-center no-padding>
+        <ion-list no-lines>
+          <ion-item-divider *ngIf="task.ItemStatus === 'created'" color="light" style="border-bottom: 1px solid #d4d4d4;font-size: 1.4rem;font-weight: normal;">Item Created</ion-item-divider>
+          <ion-item-divider *ngIf="task.ItemStatus === 'delete'" color="light" style="border-bottom: 1px solid #d4d4d4;font-size: 1.4rem;font-weight: normal;">Item Deleted</ion-item-divider>
+          <ion-item-divider *ngIf="task.ItemStatus === 'restore'" color="light" style="border-bottom: 1px solid #d4d4d4;font-size: 1.4rem;font-weight: normal;">Item Restored</ion-item-divider>
+          <ion-item *ngFor="let item of newItem" style="border-bottom: 1px solid #d4d4d4;">
+            <p style='white-space: normal;'>
+              <strong>{{item.key}}</strong> : {{getLookupColumnValue(item.val)}}</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+  <ion-grid no-padding *ngIf="task.ItemStatus === 'modified'" style="border-radius: 15px;">
+    <ion-row align-items-center justify-content-center no-padding no-margin>
+      
+
+      <ion-col col-6 align-self-center no-padding>
+        <ion-list no-lines>
+          <ion-item-divider color="light" style="border-bottom: 1px solid #d4d4d4;font-size: 1.4rem;font-weight: normal;">Previous Item</ion-item-divider>
+          <ion-item *ngFor="let item of previousItem; let i = index;" style="border-bottom: 1px solid #d4d4d4;" [class.updated]="getLookupColumnValue(item.val) != getLookupColumnValue(newItem[i].val)">
+            <p style='white-space: normal;'>
+              <strong>{{item.key}}</strong><br><span>{{getLookupColumnValue(item.val)}}</span></p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <ion-col col-6 align-self-center no-padding>
+        <ion-list no-lines>
+          <ion-item-divider color="light" style="border-bottom: 1px solid #d4d4d4;border-right: 0.2px solid #cacaca;font-size: 1.4rem;font-weight: normal;">Modified Item</ion-item-divider>
+          <ion-item *ngFor="let item of newItem; let i = index;" style="border-bottom: 1px solid #d4d4d4;border-right: 0.2px solid #cacaca;" [class.updated]="getLookupColumnValue(item.val) != getLookupColumnValue(previousItem[i]?.val)">
+            <p style='white-space: normal;'>
+              <strong style="visibility: hidden;">{{item.key}}</strong><br><span>{{getLookupColumnValue(item.val)}}</span></p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer>
+
+
+  <ion-grid no-padding>
+    <ion-row align-items-center justify-content-center no-padding no-margin>
+      <ion-col col-6 align-self-center no-padding>
+        <div class="row" style="  background-color: #efefef;
+        justify-content: center;
+        border-top: 0.4px solid;
+        border-top-color: #cacaca;
+        color: #007aff;
+        border-right: 0.4px solid #cacaca;
+        border-bottom-left-radius: 15px;">
+          <button ion-button block color="rapidBG" style="color: #007aff;border-radius:15px;box-shadow:none;" (click)="action('yes')">Approve</button>
+        </div>
+      </ion-col>
+
+      <ion-col col-6 align-self-center no-padding>
+        <div class="row" style="  background-color: #efefef;
+        justify-content: center;
+        border-top: 0.4px solid;
+        border-top-color: #cacaca; 
+        color: #007aff;
+        border-bottom-right-radius: 15px;">
+          <button ion-button block color="rapidBG" style="color: #007aff;border-radius:15px;box-shadow:none;" (click)="action('no')">Reject</button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-footer>

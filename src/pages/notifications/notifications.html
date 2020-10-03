@@ -1,0 +1,97 @@
+<!--
+  Generated template for the NotificationsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+
+<ion-header *ngIf="!globalservice.toggleSearch">
+
+
+  <ion-toolbar>
+
+      <div class="row" style="padding-left: 0px;">
+          <img style="margin: 5px;border-radius: 7px;" height="37px" width="37px" src="{{globalservice.processImg}}">
+          <div class="item" style="background: #061D49;    padding: 3px 0px 0px 5px;    border: none; width:80%;">
+              <h5 style="color: white;    text-align: left;    margin: 0;  overflow: hidden;   white-space: nowrap;text-overflow: ellipsis;">{{globalservice.name}}</h5>
+              <h6 style="color: white;    text-align: left;    margin: 0; overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">{{globalservice.processOrganization}}</h6>
+          </div>
+      </div>
+
+
+      <button ion-button icon-only menuToggle start (click)="gotomyprocess()">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+
+      <ion-buttons end>
+          <button *ngIf="globalservice.showfiltericon" (click)="showadvisory()" ion-button icon-only>
+              <img style="margin-right: 10px" height="25px" width="25px" src='assets/icon/advisoryIcon.png'>
+          </button>
+          <button *ngIf="!globalservice.hideshowsearch && !globalservice.hideAllFilters" ion-button icon-only (click)="globalservice.toggleSearch = !globalservice.toggleSearch; searchField = '';togglebackdrop=true">
+              <img style="margin-right: 5px" height="25px" width="25px" src="assets/icon/search.png">
+          </button>
+          <button *ngIf="!globalservice.hideshowsearch && !globalservice.hideAllFilters" (click)="globalservice.toggleSort = !globalservice.toggleSort; toggleSortAndPublish(globalservice.toggleSort);"
+              ion-button icon-only>
+              <img style="margin-right: 10px" height="25px" width="25px" [src]="globalservice.toggleSort ? 'assets/icon/sort_on.png' : 'assets/icon/sort_off.png'">
+          </button>
+      </ion-buttons>
+
+
+  </ion-toolbar>
+
+  <network></network>
+</ion-header>
+<ion-header *ngIf="globalservice.toggleSearch">
+  <ion-toolbar>
+      <ion-searchbar focuser style="background-color: #ffffff ;" [(ngModel)]="searchField" [formControl]="searchControl" placeholder="Filter contents below..."
+          [showCancelButton]="true" (ionFocus)="togglebackdrop = true" (ionBlur)="searchField == '' ? globalservice.toggleSearch = false : globalservice.toggleSearch = true; togglebackdrop = false"
+          (ionCancel)="globalservice.toggleSearch = !globalservice.toggleSearch; searchField = ''">
+      </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding-top>
+
+  <div [hidden]="Notifications.length > 0" class="screen-center">
+    <div style="padding: 6% 3% 6% 3%;
+                          text-align: center;
+                          background-color: #eeeeee;
+                          border: 1px dashed #a5a5a5;
+                          width: 50%;">
+      <h4 style="color:#837B79;text-align:center;font-size:1.05em">No notifications available in this view</h4>
+    </div>
+  </div>
+
+  <ion-list no-lines>
+    <div *ngFor="let notification of Notifications | searchFilter: mysearch | sortFilterDate: {property: column, order: order}">
+      <ion-item-sliding #slidingitem style="border-bottom: 1px solid #d4d4d4;">
+
+        <ion-item (click)="openModal(notification)">
+          <h2 style="width: 70%;overflow: hidden;text-overflow: ellipsis;float: left;font-size: 1.7rem;font-weight: normal;">{{notification.FromDisplayName}}</h2>
+          <h3 [class.unread]="notification.NotificationAction === 'Pending'" style="float:right;margin: 0 0 3px;font-size: 1.4rem;font-weight: normal;line-height: normal;">{{notification.DateCreated | processOffset : globalservice.processpermissions.processGlobalSettings.Process_Settings.PROCESS_TIMEZONE | whatsappdateformatter}}</h3>
+          <br>
+          <p style="white-space:normal;" [class.unread]="notification.NotificationAction === 'Pending'">{{notification.Message | decodeUriComponent}} </p>
+        </ion-item>
+        <ion-item-options side="right">
+
+          <button *ngIf="notification.NotificationAction === 'Pending'" (click)="readnotification(notification,slidingitem)" ion-button
+            style="background-color: grey;">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/mark_read_display.png">
+            <span>&nbsp;&nbsp;Read&nbsp;&nbsp;</span>
+          </button>
+          <button *ngIf="notification.NotificationAction !== 'Pending'" ion-button style="background-color: grey;" (click)="unreadnotification(notification,slidingitem)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/mark_unread_display.png"> &nbsp;Unread&nbsp;
+          </button>
+          <button style="background-color: red;" ion-button (click)="deletenotification(notification)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/Remove.png"> &nbsp;Delete&nbsp;
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+
+    </div>
+  </ion-list>
+</ion-content>

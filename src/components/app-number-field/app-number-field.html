@@ -1,0 +1,38 @@
+<style>
+  input.ng-invalid{border-color: red !important; border-radius: 4px;} 
+  textarea.ng-invalid{border-color: red !important; border-radius: 4px;}
+  .validation{ font-size:11px;color:red;margin-left: 1%;}
+
+  .enablenumberfield::placeholder {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-height: 34px;
+  padding-right: 15%;
+  }
+  .footer{
+  border: none !important;
+  background-color:#ececec;
+  }
+  .numberRequired{
+      border: 1px solid;
+      border-color: red !important; 
+      border-radius: 4px;
+    }
+    .numberNotRequired{
+      border: 1px solid;
+    }
+</style>
+<div *ngIf="isFooter"> 
+  <textarea class="footer" readonly appAutosize [minHeight]="34" currencyMask [(ngModel)]="ngModel" (ngModelChange)="onValueChange($event)" (blur)="emitvalue()" attr.value="{{ngModel}}" 
+   [(options)]="controlOptions">{{ngModel}}</textarea>  
+</div>
+<div *ngIf="!isFooter"> 
+  <textarea maxlength="20" appAutosize [minHeight]="34" currencyMask [(ngModel)]="ngModel" (ngModelChange)="onValueChange($event)" (blur)="emitvalue()" attr.value="{{ngModel}}" class="{{className}}" 
+  [ngClass]="{'numberRequired': !ngModel && controlOptions.required, 'numberNotRequired': ngModel}" [attr.disabled]="controlOptions.disabled ? '':null" 
+  [attr.readonly]="controlOptions.readonly ? '':null" [required]="controlOptions.required" [(options)]="controlOptions" >{{ngModel}}</textarea>  
+</div>
+<div class="validation" *ngIf="!ngModel && controlOptions.required && clicked">
+  {{controlOptions.validationText}}
+</div>
+  

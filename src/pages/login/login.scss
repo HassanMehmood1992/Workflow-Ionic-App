@@ -1,0 +1,43 @@
+page-login {
+    .form-validation-warning {
+        font-size: 0.8em;
+        color: crimson;
+      }
+      .text-input::-moz-placeholder {
+          font-size: 14px;
+        }
+
+        .text-input:-ms-input-placeholder {
+font-size: 14px;
+        }
+
+        .text-input::-webkit-input-placeholder {
+        text-indent: 0;
+font-size: 14px;
+        }
+}
+
+
+.spacer
+{
+    width: 300px;
+    height: 100px;
+}
+.spacer2
+{
+    width: 300px;
+    height: 50px;
+}
+@media (max-width: 767px)
+{
+    .logintop {
+    width: 100%; height: auto;
+    }
+}
+
+@media (min-width: 767px)
+{
+    .logintop {
+    width: 80%; height: auto; padding-left:20%;
+    }
+}

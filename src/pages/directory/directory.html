@@ -1,0 +1,120 @@
+<!--
+  Generated template for the DirectoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header *ngIf="!toggleSearch">
+
+  <ion-navbar>
+    <ion-title>Process Directory</ion-title>
+    <ion-buttons end>
+      <button [hidden]="globalservice.hideshowsearch" ion-button icon-only (click)="toggleSearch = !toggleSearch; searchField = ''">
+        <img style="margin-right: 0px" height="25px" width="25px" src="assets/icon/search.png">
+      </button>
+      <button ion-button icon-only (click)="goToAccess()">
+        <img style="margin: 5px 10px 5px 10px" height="25px" width="25px" src="assets/icon/access_request.png">
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+
+  <network></network>
+</ion-header>
+
+<ion-header *ngIf="toggleSearch">
+  <ion-toolbar>
+    <ion-searchbar focuser style="background-color: white ;" [formControl]="searchControl" [(ngModel)]="searchField" placeholder="Filter contents below..."
+      [showCancelButton]="true" (ionCancel)="toggleSearch = !toggleSearch; searchField = '';getprocesseswithoutloading('')">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingText="Refreshing process directory" pullingText="Pull to refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item style="">
+    <ion-label>Organization</ion-label>
+    <ion-select style="color: #007AFF;" (ionChange)="organizationChanged($event)" interface="action-sheet" [(ngModel)]="selectedOrg">
+      <ion-option *ngFor="let org of Organizations" [value]="org">{{org.OrganizationName}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <div [hidden]="Processes.length > 0" class="screen-center">
+    <div style="padding: 6% 3% 6% 3%;
+                  text-align: center;
+                  background-color: #eeeeee;
+                  border: 1px dashed #a5a5a5;
+                  width: 50%;">
+      <h4 style="color:#837B79;text-align:center;font-size:1.05em">No processes available</h4>
+    </div>
+  </div>
+
+  <ion-list no-lines [hidden]="Processes.length <= 0">
+
+    <div *ngFor="let process of Processes">
+      <ion-item-sliding #slidingitem style="border-bottom: 1px solid #d4d4d4;">
+
+        <ion-item style="padding-left: 0px;" detail-push (click)="openModal(process)">
+          <ion-grid style="padding: 0px 0px 0px 10px;">
+            <ion-row>
+              <ion-col col-12 style="padding: 0px 0px 0px 0px;">
+                <div style="padding-bottom: 5px;">
+
+                  <div class="" style="">
+                    <div style="clear:both;">
+                      <div style="width: 60px;float:left;">
+                        <img src="{{process.ProcessImage}}" style="border-radius: 10px;max-height: 60px;max-width: 60px;height: 60px;width: 60px;">
+                      </div>
+                      <ion-row>
+                        <ion-col col-10 style="padding: 0px 0px 0px 0px;">
+                          <div style="padding-left:7px">
+                            <h2 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.7rem;font-weight: normal;">{{ process.ProcessName }}</h2>
+                            <h3 style="margin: 0px 0px 0px 0px; overflow: hidden;white-space: nowrap; text-overflow:ellipsis; font-size: 1.5rem;font-weight: normal;">{{ process.OrganizationName }}</h3>
+                          </div>
+                        </ion-col>
+                        <ion-col col-2 style="padding: 0px 0px 0px 0px;">
+
+                        </ion-col>
+                      </ion-row>
+                      <p style="padding-left:7px; margin:0px; font-size: 1.4rem;font-weight: normal; color: #6f6f6f; overflow: hidden;white-space: nowrap; text-overflow:ellipsis;">{{ process.Description}}
+
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+          <span *ngIf="process.IsSubscribed != 'false'" style="color: grey;" item-end>
+            <img style="margin-top: 5px" height="20px" width="20px" src="assets/icon/already_added.png">
+          </span>
+
+        </ion-item>
+
+        <ion-item-options side="right">
+          <button *ngIf="process.IsSubscribed == 'false'" style="background-color: #84bd00;box-shadow:none;" ion-button (click)="subscribe(process,slidingitem)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/addtofavorites_outline.png"> &nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp;
+          </button>
+          <button ion-button style="background-color: #0082BA;box-shadow:none;" (click)="share(process,slidingitem)">
+            <img style="margin: 5px" height="25px" width="25px" src="assets/icon/Share.png"> &nbsp;&nbsp;Share&nbsp;&nbsp;
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content loadingText=""></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+
+
+  </ion-list>
+
+</ion-content>
