@@ -1,6 +1,6 @@
 ## RapidFlow
 
-Workflow management mobile app. https://play.google.com/store/apps/details?id=com.abbvie.rf. Build in Ionic 2 and Angular 4
+Workflow management mobile app. https://play.google.com/store/apps/details?id=com.abbvie.rf. Build in Ionic 2 and Angular 4. Creating workflow management tools using JSON and Dynamic forms.
 
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
